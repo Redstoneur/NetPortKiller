@@ -1,3 +1,7 @@
+"""
+Tests unitaires pour les fonctions principales du module netportkiller.core.
+"""
+
 import unittest
 from typing import Any, List
 
