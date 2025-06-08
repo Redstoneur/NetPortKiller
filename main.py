@@ -1,14 +1,16 @@
-# Main entry point for the NetPortKiller application.
-# This script initializes and launches the application's graphical interface.
+"""
+Point d'entrée principal pour l'application NetPortKiller.
+Ce script initialise et lance l'interface graphique de l'application.
+"""
 
 import os
 import sys
 
 from netportkiller.gui import NetPortKillerApp
 
-if hasattr(sys, "_MEIPASS"):
+if hasattr(sys, "_MEIPASS") and getattr(sys, "_MEIPASS"):
     # Exécution depuis l'exécutable PyInstaller
-    icon_path = os.path.join(sys._MEIPASS, "assets", "icon.ico")
+    icon_path = os.path.join(getattr(sys, "_MEIPASS"), "assets", "icon.ico")
 else:
     # Exécution depuis le code source
     icon_path = os.path.abspath("./assets/icon.ico")
