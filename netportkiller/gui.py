@@ -28,7 +28,7 @@ class NetPortKillerApp(tk.Tk):
         super().__init__()
         self.title("NetPortKiller")
         self.geometry("600x400")
-        self.icon_path = os.path.abspath(icon_path)
+        self.icon_path: str | None = os.path.abspath(icon_path) if icon_path else None
         self.set_icon()
         self.build_ui()
         self.refresh_ports()
