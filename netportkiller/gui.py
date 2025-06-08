@@ -27,7 +27,8 @@ class NetPortKillerApp(tk.Tk):
         """
         Construit l'interface utilisateur :
         - Un tableau (Treeview) listant les ports, protocoles, PID et processus.
-        - Deux boutons : 'Refresh' pour actualiser la liste, 'Kill Selected' pour tuer les processus sélectionnés.
+        - Deux boutons : 'Refresh' pour actualiser la liste, 'Kill Selected' pour tuer les processus
+          sélectionnés.
         """
         self.tree = ttk.Treeview(self, columns=("Port", "Protocol", "PID", "Process"),
                                  show='headings', selectmode="extended")

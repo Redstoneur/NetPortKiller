@@ -59,7 +59,7 @@ def kill_process(pid: int) -> bool:
     Termine le processus correspondant au PID donné.
 
     Tente d'arrêter proprement le processus identifié par le PID fourni.
-    Attend jusqu'à 3 secondes pour la terminaison du processus.
+    Attend jusqu'à trois secondes pour la terminaison du processus.
 
     :param pid: Identifiant du processus à terminer.
     :return: True si le processus a été terminé avec succès, False sinon.
