@@ -45,7 +45,10 @@ def get_used_ports() -> List[PortInfo]:
     """
     ports_info: List[PortInfo] = []
     for conn in psutil.net_connections(kind='inet'):
-        if not conn.laddr or conn.status != psutil.CONN_LISTEN:
+        if (
+                not conn.laddr or
+                (conn.type == socket.SOCK_STREAM and conn.status != psutil.CONN_LISTEN)
+        ):
             continue
 
         port: int = conn.laddr.port
