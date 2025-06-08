@@ -6,11 +6,23 @@ import psutil
 
 
 class Protocol(str, Enum):
+    """
+    Enumération représentant les protocoles réseau supportés.
+    - TCP : Transmission Control Protocol
+    - UDP : User Datagram Protocol
+    """
     TCP = "TCP"
     UDP = "UDP"
 
 
 class PortInfo(TypedDict):
+    """
+    Structure de type dictionnaire décrivant les informations d'un port réseau utilisé.
+    - port : numéro du port
+    - protocol : protocole réseau (TCP ou UDP)
+    - pid : identifiant du processus utilisant le port
+    - process : nom du processus utilisant le port
+    """
     port: int
     protocol: Protocol
     pid: int
