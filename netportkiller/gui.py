@@ -6,16 +6,16 @@ from netportkiller.core import get_used_ports, kill_process
 
 class NetPortKillerApp(tk.Tk):
     """
-    Application graphique principale pour NetPortKiller.
+    Main graphical application for NetPortKiller.
 
-    Cette application permet d'afficher les ports réseau utilisés sur la machine,
-    d'actualiser la liste et de tuer les processus associés à des ports sélectionnés.
+    This application displays the network ports in use on the machine,
+    allows refreshing the list, and killing processes associated with selected ports.
     """
 
     def __init__(self) -> None:
         """
-        Initialise la fenêtre principale, construit l'interface utilisateur
-        et affiche la liste des ports utilisés.
+        Initialize the main window, build the user interface,
+        and display the list of used ports.
         """
         super().__init__()
         self.title("NetPortKiller")
@@ -25,11 +25,21 @@ class NetPortKillerApp(tk.Tk):
 
     def build_ui(self) -> None:
         """
-        Construit l'interface utilisateur :
-        - Un tableau (Treeview) listant les ports, protocoles, PID et processus.
-        - Deux boutons : 'Refresh' pour actualiser la liste, 'Kill Selected' pour tuer les processus
-          sélectionnés.
+        Build the user interface:
+        - A search bar to filter all columns.
+        - A table (Treeview) listing ports, protocols, PID, and process.
+        - Two buttons: 'Refresh' to update the list, 'Kill Selected' to terminate selected processes.
         """
+        # Search bar
+        search_frame = tk.Frame(self)
+        search_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+        tk.Label(search_frame, text="Search:").pack(side=tk.LEFT)
+        self.search_var = tk.StringVar()
+        self.search_var.trace_add("write", self.on_search)
+        search_entry = tk.Entry(search_frame, textvariable=self.search_var)
+        search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(5, 0))
+
+        # Treeview
         self.tree = ttk.Treeview(self, columns=("Port", "Protocol", "PID", "Process"),
                                  show='headings', selectmode="extended")
         for col in self.tree["columns"]:
@@ -47,24 +57,39 @@ class NetPortKillerApp(tk.Tk):
 
     def refresh_ports(self) -> None:
         """
-        Rafraîchit la liste des ports affichés dans le tableau en appelant `get_used_ports`.
-        Efface les anciennes entrées avant d'ajouter les nouvelles.
+        Refresh the list of ports displayed in the table by calling `get_used_ports`.
+        Clears old entries before adding new ones.
         """
+        self.all_ports = list(get_used_ports())  # Store all entries for filtering
+        self.apply_filter()
+
+    def apply_filter(self):
+        """
+        Filter the displayed ports based on the search bar.
+        """
+        search = self.search_var.get().lower() if hasattr(self, 'search_var') else ""
         for i in self.tree.get_children():
             self.tree.delete(i)
+        for entry in getattr(self, 'all_ports', []):
+            values = (
+                str(entry["port"]),
+                str(entry["protocol"].value),
+                str(entry["pid"]),
+                str(entry["process"])
+            )
+            if not search or any(search in str(v).lower() for v in values):
+                self.tree.insert("", "end", values=values)
 
-        for entry in get_used_ports():
-            self.tree.insert("", "end", values=(
-                entry["port"],
-                entry["protocol"],
-                entry["pid"],
-                entry["process"]
-            ))
+    def on_search(self, *args):
+        """
+        Callback for search bar changes.
+        """
+        self.apply_filter()
 
     def kill_selected(self) -> None:
         """
-        Tente de tuer les processus associés aux ports sélectionnés dans le tableau.
-        Affiche une boîte de dialogue indiquant le nombre de processus terminés.
+        Attempt to kill the processes associated with the ports selected in the table.
+        Display a dialog indicating the number of processes terminated.
         """
         selected = self.tree.selection()
         if not selected:
@@ -82,7 +107,7 @@ class NetPortKillerApp(tk.Tk):
 
     def run(self) -> None:
         """
-        Lance la boucle principale de l'application Tkinter.
+        Start the main Tkinter application loop.
         """
         self.mainloop()
 
