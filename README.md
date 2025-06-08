@@ -1,5 +1,30 @@
 # NetPortKiller
 
+---
+
+![License](https://img.shields.io/github/license/Redstoneur/NetPortKiller)
+![Top Language](https://img.shields.io/github/languages/top/Redstoneur/NetPortKiller)
+![Python Version](https://img.shields.io/badge/python-3.13.0-blue)
+![Size](https://img.shields.io/github/repo-size/Redstoneur/NetPortKiller)
+![Contributors](https://img.shields.io/github/contributors/Redstoneur/NetPortKiller)
+![Last Commit](https://img.shields.io/github/last-commit/Redstoneur/NetPortKiller)
+![Issues](https://img.shields.io/github/issues/Redstoneur/NetPortKiller)
+![Pull Requests](https://img.shields.io/github/issues-pr/Redstoneur/NetPortKiller)
+
+---
+
+![Forks](https://img.shields.io/github/forks/Redstoneur/NetPortKiller)
+![Stars](https://img.shields.io/github/stars/Redstoneur/NetPortKiller)
+![Watchers](https://img.shields.io/github/watchers/Redstoneur/NetPortKiller)
+
+---
+
+![Latest Release](https://img.shields.io/github/v/release/Redstoneur/NetPortKiller)
+![Release Date](https://img.shields.io/github/release-date/Redstoneur/NetPortKiller)
+[![Build Status](https://github.com/Redstoneur/NetPortKiller/actions/workflows/build.yml/badge.svg)](https://github.com/Redstoneur/NetPortKiller/actions/workflows/build.yml)
+
+---
+
 NetPortKiller is a simple graphical tool for listing and terminating processes that are using network ports on your
 machine. It is useful for developers and system administrators who need to quickly identify and free up occupied TCP/UDP
 ports.
