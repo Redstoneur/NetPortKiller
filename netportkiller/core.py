@@ -1,9 +1,23 @@
 import socket
+from enum import Enum
+from typing import List, Optional, TypedDict
 
 import psutil
 
 
-def get_used_ports() -> list:
+class Protocol(str, Enum):
+    TCP = "TCP"
+    UDP = "UDP"
+
+
+class PortInfo(TypedDict):
+    port: int
+    protocol: Protocol
+    pid: int
+    process: str
+
+
+def get_used_ports() -> List[PortInfo]:
     """
     Récupère la liste des ports réseau actuellement utilisés en mode écoute (LISTEN).
 
@@ -13,21 +27,21 @@ def get_used_ports() -> list:
 
     :return: Liste de dictionnaires contenant les informations sur les ports utilisés.
     """
-    ports_info = []
+    ports_info: List[PortInfo] = []
     for conn in psutil.net_connections(kind='inet'):
         if not conn.laddr or conn.status != psutil.CONN_LISTEN:
             continue
 
-        port = conn.laddr.port
-        pid = conn.pid
-        proto = 'TCP' if conn.type == socket.SOCK_STREAM else 'UDP'
+        port: int = conn.laddr.port
+        pid: Optional[int] = conn.pid
+        proto: Protocol = Protocol.TCP if conn.type == socket.SOCK_STREAM else Protocol.UDP
 
         if pid is None:
             continue
 
         try:
             proc = psutil.Process(pid)
-            pname = proc.name()
+            pname: str = proc.name()
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             pname = "Unknown"
 
@@ -40,7 +54,7 @@ def get_used_ports() -> list:
     return ports_info
 
 
-def kill_process(pid) -> bool:
+def kill_process(pid: int) -> bool:
     """
     Termine le processus correspondant au PID donné.
 

@@ -12,7 +12,7 @@ class NetPortKillerApp(tk.Tk):
     d'actualiser la liste et de tuer les processus associés à des ports sélectionnés.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialise la fenêtre principale, construit l'interface utilisateur
         et affiche la liste des ports utilisés.
@@ -23,7 +23,7 @@ class NetPortKillerApp(tk.Tk):
         self.build_ui()
         self.refresh_ports()
 
-    def build_ui(self):
+    def build_ui(self) -> None:
         """
         Construit l'interface utilisateur :
         - Un tableau (Treeview) listant les ports, protocoles, PID et processus.
@@ -44,7 +44,7 @@ class NetPortKillerApp(tk.Tk):
         tk.Button(btn_frame, text="Kill Selected", command=self.kill_selected).pack(side=tk.LEFT,
                                                                                     padx=5)
 
-    def refresh_ports(self):
+    def refresh_ports(self) -> None:
         """
         Rafraîchit la liste des ports affichés dans le tableau en appelant `get_used_ports`.
         Efface les anciennes entrées avant d'ajouter les nouvelles.
@@ -60,7 +60,7 @@ class NetPortKillerApp(tk.Tk):
                 entry["process"]
             ))
 
-    def kill_selected(self):
+    def kill_selected(self) -> None:
         """
         Tente de tuer les processus associés aux ports sélectionnés dans le tableau.
         Affiche une boîte de dialogue indiquant le nombre de processus terminés.
@@ -79,7 +79,7 @@ class NetPortKillerApp(tk.Tk):
         messagebox.showinfo("Done", f"{killed} process(es) terminated.")
         self.refresh_ports()
 
-    def run(self):
+    def run(self) -> None:
         """
         Lance la boucle principale de l'application Tkinter.
         """
