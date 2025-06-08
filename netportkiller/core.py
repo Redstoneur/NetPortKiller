@@ -3,7 +3,16 @@ import socket
 import psutil
 
 
-def get_used_ports():
+def get_used_ports() -> list:
+    """
+    Récupère la liste des ports réseau actuellement utilisés en mode écoute (LISTEN).
+
+    Parcourt toutes les connexions réseau de type 'inet' (IPv4/IPv6) et collecte les informations
+    sur les ports en écoute, le protocole (TCP/UDP), le PID du processus associé et le nom du
+    processus.
+
+    :return: Liste de dictionnaires contenant les informations sur les ports utilisés.
+    """
     ports_info = []
     for conn in psutil.net_connections(kind='inet'):
         if not conn.laddr or conn.status != psutil.CONN_LISTEN:
@@ -31,7 +40,16 @@ def get_used_ports():
     return ports_info
 
 
-def kill_process(pid):
+def kill_process(pid) -> bool:
+    """
+    Termine le processus correspondant au PID donné.
+
+    Tente d'arrêter proprement le processus identifié par le PID fourni.
+    Attend jusqu'à 3 secondes pour la terminaison du processus.
+
+    :param pid: Identifiant du processus à terminer.
+    :return: True si le processus a été terminé avec succès, False sinon.
+    """
     try:
         proc = psutil.Process(pid)
         proc.terminate()

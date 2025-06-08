@@ -4,15 +4,31 @@ from tkinter import ttk, messagebox
 from netportkiller.core import get_used_ports, kill_process
 
 
-class NetPortKillerApp(tk.Tk):  # Hérite de tk.Tk
+class NetPortKillerApp(tk.Tk):
+    """
+    Application graphique principale pour NetPortKiller.
+
+    Cette application permet d'afficher les ports réseau utilisés sur la machine,
+    d'actualiser la liste et de tuer les processus associés à des ports sélectionnés.
+    """
+
     def __init__(self):
-        super().__init__()  # Appelle le constructeur parent
+        """
+        Initialise la fenêtre principale, construit l'interface utilisateur
+        et affiche la liste des ports utilisés.
+        """
+        super().__init__()
         self.title("NetPortKiller")
         self.geometry("600x400")
         self.build_ui()
         self.refresh_ports()
 
     def build_ui(self):
+        """
+        Construit l'interface utilisateur :
+        - Un tableau (Treeview) listant les ports, protocoles, PID et processus.
+        - Deux boutons : 'Refresh' pour actualiser la liste, 'Kill Selected' pour tuer les processus sélectionnés.
+        """
         self.tree = ttk.Treeview(self, columns=("Port", "Protocol", "PID", "Process"),
                                  show='headings', selectmode="extended")
         for col in self.tree["columns"]:
@@ -29,6 +45,10 @@ class NetPortKillerApp(tk.Tk):  # Hérite de tk.Tk
                                                                                     padx=5)
 
     def refresh_ports(self):
+        """
+        Rafraîchit la liste des ports affichés dans le tableau en appelant `get_used_ports`.
+        Efface les anciennes entrées avant d'ajouter les nouvelles.
+        """
         for i in self.tree.get_children():
             self.tree.delete(i)
 
@@ -41,6 +61,10 @@ class NetPortKillerApp(tk.Tk):  # Hérite de tk.Tk
             ))
 
     def kill_selected(self):
+        """
+        Tente de tuer les processus associés aux ports sélectionnés dans le tableau.
+        Affiche une boîte de dialogue indiquant le nombre de processus terminés.
+        """
         selected = self.tree.selection()
         if not selected:
             messagebox.showinfo("No Selection", "Please select one or more ports.")
@@ -56,6 +80,9 @@ class NetPortKillerApp(tk.Tk):  # Hérite de tk.Tk
         self.refresh_ports()
 
     def run(self):
+        """
+        Lance la boucle principale de l'application Tkinter.
+        """
         self.mainloop()
 
 
