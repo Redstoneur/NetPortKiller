@@ -6,14 +6,14 @@ from netportkiller import core
 
 class TestCoreFunctions(unittest.TestCase):
     """
-    Classe de tests unitaires pour les fonctions principales du module core de netportkiller.
+    Unit test class for the main functions of the netportkiller core module.
     """
 
     def test_get_used_ports(self) -> None:
         """
-        Teste la fonction get_used_ports du module core.
-        Vérifie que la liste retournée contient des dictionnaires avec les clés attendues :
-        'port', 'protocol', 'pid', et 'process'.
+        Test the get_used_ports function from the core module.
+        Checks that the returned list contains dictionaries with the expected keys:
+        'port', 'protocol', 'pid', and 'process'.
         """
         ports: List[Any] = core.get_used_ports()
         self.assertIsInstance(ports, list)
@@ -25,10 +25,10 @@ class TestCoreFunctions(unittest.TestCase):
 
     def test_kill_process_invalid(self) -> None:
         """
-        Teste la fonction kill_process du module core avec un PID invalide (0).
-        Vérifie que la fonction retourne False, car le PID 0 n'est généralement pas tuable.
+        Test the kill_process function from the core module with an invalid PID (0).
+        Checks that the function returns False, since PID 0 is generally not killable.
         """
-        # PID 0 est généralement non tuable
+        # PID 0 is generally not killable
         result: bool = core.kill_process(0)
         self.assertFalse(result)
 

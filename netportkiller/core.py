@@ -7,9 +7,9 @@ import psutil
 
 class Protocol(str, Enum):
     """
-    Enumération représentant les protocoles réseau supportés.
-    - TCP : Transmission Control Protocol
-    - UDP : User Datagram Protocol
+    Enumeration representing supported network protocols.
+    - TCP: Transmission Control Protocol
+    - UDP: User Datagram Protocol
     """
     TCP = "TCP"
     UDP = "UDP"
@@ -17,11 +17,11 @@ class Protocol(str, Enum):
 
 class PortInfo(TypedDict):
     """
-    Structure de type dictionnaire décrivant les informations d'un port réseau utilisé.
-    - port : numéro du port
-    - protocol : protocole réseau (TCP ou UDP)
-    - pid : identifiant du processus utilisant le port
-    - process : nom du processus utilisant le port
+    Dictionary-typed structure describing information about a used network port.
+    - port: port number
+    - protocol: network protocol (TCP or UDP)
+    - pid: process ID using the port
+    - process: name of the process using the port
     """
     port: int
     protocol: Protocol
@@ -31,13 +31,12 @@ class PortInfo(TypedDict):
 
 def get_used_ports() -> List[PortInfo]:
     """
-    Récupère la liste des ports réseau actuellement utilisés en mode écoute (LISTEN).
+    Retrieve the list of currently used network ports in listening mode (LISTEN).
 
-    Parcourt toutes les connexions réseau de type 'inet' (IPv4/IPv6) et collecte les informations
-    sur les ports en écoute, le protocole (TCP/UDP), le PID du processus associé et le nom du
-    processus.
+    Iterates through all network connections of type 'inet' (IPv4/IPv6) and collects information
+    about listening ports, protocol (TCP/UDP), associated process PID, and process name.
 
-    :return: Liste de dictionnaires contenant les informations sur les ports utilisés.
+    :return: List of dictionaries containing information about used ports.
     """
     ports_info: List[PortInfo] = []
     for conn in psutil.net_connections(kind='inet'):
@@ -68,13 +67,13 @@ def get_used_ports() -> List[PortInfo]:
 
 def kill_process(pid: int) -> bool:
     """
-    Termine le processus correspondant au PID donné.
+    Terminate the process corresponding to the given PID.
 
-    Tente d'arrêter proprement le processus identifié par le PID fourni.
-    Attend jusqu'à trois secondes pour la terminaison du processus.
+    Attempts to gracefully stop the process identified by the provided PID.
+    Waits up to three seconds for the process to terminate.
 
-    :param pid: Identifiant du processus à terminer.
-    :return: True si le processus a été terminé avec succès, False sinon.
+    :param pid: Process ID to terminate.
+    :return: True if the process was successfully terminated, False otherwise.
     """
     try:
         proc = psutil.Process(pid)

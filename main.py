@@ -1,19 +1,19 @@
-# Point d'entrée principal de l'application NetPortKiller.
-# Ce script initialise et lance l'interface graphique de l'application.
+# Main entry point for the NetPortKiller application.
+# This script initializes and launches the application's graphical interface.
 
 from netportkiller.gui import NetPortKillerApp
 
 
 def main() -> None:
     """
-    Point d'entrée principal de l'application NetPortKiller.
-    Initialise et lance l'interface graphique de l'application.
-    Cette fonction crée une instance de l'application graphique et démarre la boucle principale
-    pour afficher l'interface utilisateur et gérer les interactions de l'utilisateur.
+    Main entry point for the NetPortKiller application.
+    Initializes and launches the application's graphical interface.
+    This function creates an instance of the graphical application and starts the main loop
+    to display the user interface and handle user interactions.
     """
-    # Crée une instance de l'application graphique NetPortKiller.
+    # Create an instance of the NetPortKiller graphical application.
     app = NetPortKillerApp()
-    # Démarre la boucle principale de l'application.
+    # Start the application's main loop.
     app.run()
 
 
