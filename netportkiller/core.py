@@ -1,5 +1,7 @@
-import psutil
 import socket
+
+import psutil
+
 
 def get_used_ports():
     ports_info = []
@@ -27,6 +29,7 @@ def get_used_ports():
             'process': pname
         })
     return ports_info
+
 
 def kill_process(pid):
     try:
