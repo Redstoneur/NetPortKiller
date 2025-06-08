@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -12,16 +13,31 @@ class NetPortKillerApp(tk.Tk):
     allows refreshing the list, and killing processes associated with selected ports.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, icon_path=None) -> None:
         """
         Initialize the main window, build the user interface,
         and display the list of used ports.
+
+        :param icon_path: Path to the application icon file.
         """
         super().__init__()
         self.title("NetPortKiller")
         self.geometry("600x400")
+        self.icon_path = os.path.abspath(icon_path)
+        self.set_icon()
         self.build_ui()
         self.refresh_ports()
+
+    def set_icon(self) -> None:
+        """
+        Set the application icon if the icon path is valid.
+        This method is called during initialization to set the window icon.
+        """
+        if self.icon_path and os.path.exists(self.icon_path):
+            try:
+                self.iconbitmap(self.icon_path)
+            except Exception:
+                pass
 
     def build_ui(self) -> None:
         """
