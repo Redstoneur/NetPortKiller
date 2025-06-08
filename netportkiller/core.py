@@ -1,3 +1,8 @@
+"""
+Module principal pour la gestion des ports réseau et des processus associés.
+Fournit les fonctions pour lister les ports utilisés et tuer les processus par PID.
+"""
+
 import socket
 from enum import Enum
 from typing import List, Optional, TypedDict
@@ -80,5 +85,5 @@ def kill_process(pid: int) -> bool:
         proc.terminate()
         proc.wait(3)
         return True
-    except Exception:
+    except psutil.Error:
         return False

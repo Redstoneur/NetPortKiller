@@ -1,3 +1,8 @@
+"""
+Interface graphique principale pour NetPortKiller.
+Affiche les ports réseau utilisés et permet de tuer les processus associés.
+"""
+
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -36,7 +41,7 @@ class NetPortKillerApp(tk.Tk):
         if self.icon_path and os.path.exists(self.icon_path):
             try:
                 self.iconbitmap(self.icon_path)
-            except Exception:
+            except tk.TclError:
                 pass
 
     def build_ui(self) -> None:
@@ -44,7 +49,8 @@ class NetPortKillerApp(tk.Tk):
         Build the user interface:
         - A search bar to filter all columns.
         - A table (Treeview) listing ports, protocols, PID, and process.
-        - Two buttons: 'Refresh' to update the list, 'Kill Selected' to terminate selected processes.
+        - Two buttons: 'Refresh' to update the list, 'Kill Selected' to terminate selected
+          processes.
         """
         # Search bar
         search_frame = tk.Frame(self)
@@ -68,8 +74,11 @@ class NetPortKillerApp(tk.Tk):
         btn_frame.pack(pady=5)
 
         tk.Button(btn_frame, text="Refresh", command=self.refresh_ports).pack(side=tk.LEFT, padx=5)
-        tk.Button(btn_frame, text="Kill Selected", command=self.kill_selected).pack(side=tk.LEFT,
-                                                                                    padx=5)
+        tk.Button(
+            btn_frame,
+            text="Kill Selected",
+            command=self.kill_selected
+        ).pack(side=tk.LEFT, padx=5)
 
     def refresh_ports(self) -> None:
         """
@@ -96,7 +105,7 @@ class NetPortKillerApp(tk.Tk):
             if not search or any(search in str(v).lower() for v in values):
                 self.tree.insert("", "end", values=values)
 
-    def on_search(self, *args):
+    def on_search(self, *_) -> None:
         """
         Callback for search bar changes.
         """
